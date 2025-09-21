@@ -12,6 +12,8 @@ import {
   type TransactionCategory,
   TransactionCategorySchema,
   type Profile,
+  TransactionsImporter,
+  ImportedTransaction,
 } from "@monyfox/common-data";
 import { ReactNode, useCallback, useMemo } from "react";
 import { LocalDate } from "@js-joda/core";
@@ -20,6 +22,7 @@ import { ErrorPage } from "@/components/error-page";
 import { ProfileContext } from "./profile-context";
 import { useDatabase } from "@/hooks/use-database";
 import { getDataValidationErrors } from "@/utils/data";
+import z from "zod";
 
 export type MutationResult<T> = UseMutationResult<void, Error, T, unknown>;
 
@@ -95,7 +98,11 @@ export const ProfileProvider = ({
   }
 
   return (
-    <DataProvider user={user} data={profile.data.data} rawProfile={profile}>
+    <DataProvider
+      user={user}
+      data={schemaValidationResult.data}
+      rawProfile={profile}
+    >
       {children}
     </DataProvider>
   );
@@ -147,11 +154,25 @@ function DataProvider({
       keyof Data,
       "lastUpdated" | "assetSymbolExchangersMetadata"
     >,
-  >(...creations: Array<{ key: K; entity: Data[K][number] }>) {
+  >(
+    ...creations: Array<
+      | {
+          key: K;
+          entity: Data[K][number];
+        }
+      | {
+          key: K;
+          entities: Data[K][number][];
+        }
+    >
+  ) {
     await updateDataFields(
-      ...creations.map(({ key, entity }) => ({
-        key,
-        value: [...data[key], entity] as Data[K],
+      ...creations.map((creation) => ({
+        key: creation.key,
+        value:
+          "entity" in creation
+            ? ([...data[creation.key], creation.entity] as Data[K])
+            : ([...data[creation.key], ...creation.entities] as Data[K]),
       })),
     );
   }
@@ -212,11 +233,34 @@ function DataProvider({
     );
   }, [data.transactions]);
 
+  const transactionsById = useMemo(() => {
+    const map = new Map<string, Transaction>();
+    for (const transaction of transactions) {
+      map.set(transaction.id, transaction);
+    }
+    return map;
+  }, [transactions]);
+
+  const getTransaction = useCallback(
+    (id: string): Transaction | null => {
+      return transactionsById.get(id) ?? null;
+    },
+    [transactionsById],
+  );
+
   const createTransaction = useMutation({
     mutationFn: (t: Transaction) =>
       createEntitiesAsync({
         key: "transactions",
         entity: TransactionSchema.parse(t),
+      }),
+  });
+
+  const createTransactions = useMutation({
+    mutationFn: (t: Transaction[]) =>
+      createEntitiesAsync({
+        key: "transactions",
+        entities: z.array(TransactionSchema).parse(t),
       }),
   });
 
@@ -315,6 +359,54 @@ function DataProvider({
   const getTransactionCountByCategory = useCallback(
     (id: string) => transactionCountByCategory.get(id) ?? 0,
     [transactionCountByCategory],
+  );
+
+  // Transaction importers
+  const createTransactionsImporters = useMutation({
+    mutationFn: (ti: TransactionsImporter[]) =>
+      createEntitiesAsync({
+        key: "transactionsImporters",
+        entities: ti,
+      }),
+  });
+
+  const updateTransactionsImporter = useMutation({
+    mutationFn: (ti: TransactionsImporter) =>
+      updateEntityAsync("transactionsImporters", ti),
+  });
+
+  const deleteTransactionsImporter = useMutation({
+    mutationFn: (id: string) => deleteEntityAsync("transactionsImporters", id),
+  });
+
+  // Imported transactions
+  const importTransactions = useMutation({
+    mutationFn: ({
+      transactions,
+      importedTransactions,
+    }: {
+      transactions: Transaction[];
+      importedTransactions: ImportedTransaction[];
+    }) =>
+      createEntitiesAsync(
+        { key: "transactions", entities: transactions },
+        { key: "importedTransactions", entities: importedTransactions },
+      ),
+  });
+
+  const importedTransactionsByProviderId = useMemo(() => {
+    const map = new Map<string, ImportedTransaction>();
+    for (const it of data.importedTransactions) {
+      map.set(it.id, it);
+    }
+    return map;
+  }, [data.importedTransactions]);
+
+  const getImportedTransaction = useCallback(
+    (id: string): ImportedTransaction | null => {
+      return importedTransactionsByProviderId.get(id) ?? null;
+    },
+    [importedTransactionsByProviderId],
   );
 
   // Asset symbols
@@ -477,7 +569,9 @@ function DataProvider({
         getBalanceByAccount,
 
         // Transactions
+        getTransaction,
         createTransaction,
+        createTransactions,
         updateTransaction,
         deleteTransaction,
         getTransactionsBetweenDates,
@@ -488,6 +582,15 @@ function DataProvider({
         updateTransactionCategory,
         deleteTransactionCategory,
         getTransactionCountByCategory,
+
+        // Transactions importers
+        createTransactionsImporters,
+        updateTransactionsImporter,
+        deleteTransactionsImporter,
+
+        // Imported transactions
+        importTransactions,
+        getImportedTransaction,
 
         // Symbols
         getAssetSymbol,

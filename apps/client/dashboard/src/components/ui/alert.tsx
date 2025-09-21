@@ -67,12 +67,13 @@ function AlertDescription({
 export function DestructiveAlert({
   title,
   children,
+  ...props
 }: {
   title: string;
   children: React.ReactNode;
-}) {
+} & React.ComponentProps<"div">) {
   return (
-    <Alert variant="destructive">
+    <Alert variant="destructive" {...props}>
       <CircleAlertIcon className="h-4 w-4" />
       <AlertTitle>{title}</AlertTitle>
       <AlertDescription>{children}</AlertDescription>

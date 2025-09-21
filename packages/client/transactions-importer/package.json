@@ -1,0 +1,22 @@
+{
+  "name": "@monyfox/client-transactions-importer",
+  "type": "module",
+  "private": true,
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@monyfox/common-data": "workspace:*",
+    "papaparse": "^5.5.3",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/papaparse": "^5.3.16",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "packageManager": "yarn@4.3.1"
+}

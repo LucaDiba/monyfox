@@ -1103,6 +1103,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@monyfox/client-transactions-importer@workspace:*, @monyfox/client-transactions-importer@workspace:packages/client/transactions-importer":
+  version: 0.0.0-use.local
+  resolution: "@monyfox/client-transactions-importer@workspace:packages/client/transactions-importer"
+  dependencies:
+    "@monyfox/common-data": "workspace:*"
+    "@types/papaparse": "npm:^5.3.16"
+    papaparse: "npm:^5.5.3"
+    typescript: "npm:^5.9.2"
+    vitest: "npm:^3.2.4"
+    zod: "npm:^4.1.5"
+  languageName: unknown
+  linkType: soft
+
 "@monyfox/common-data@workspace:*, @monyfox/common-data@workspace:packages/common/data":
   version: 0.0.0-use.local
   resolution: "@monyfox/common-data@workspace:packages/common/data"
@@ -1145,6 +1158,7 @@ __metadata:
     "@formkit/auto-animate": "npm:^0.8.4"
     "@hookform/resolvers": "npm:^5.2.1"
     "@js-joda/core": "npm:^5.6.5"
+    "@monyfox/client-transactions-importer": "workspace:*"
     "@monyfox/common-data": "workspace:*"
     "@monyfox/common-symbol": "workspace:*"
     "@monyfox/common-symbol-exchange": "workspace:*"
@@ -1183,6 +1197,7 @@ __metadata:
     class-variance-authority: "npm:^0.7.1"
     clsx: "npm:^2.1.1"
     csstype: "npm:^3.1.3"
+    date-fns: "npm:^4.1.0"
     eslint: "npm:^9.34.0"
     eslint-plugin-react-hooks: "npm:^5.2.0"
     eslint-plugin-react-refresh: "npm:^0.4.20"
@@ -1190,10 +1205,12 @@ __metadata:
     framer-motion: "npm:^12.23.12"
     globals: "npm:^16.3.0"
     graph-data-structure: "npm:^4.5.0"
+    immer: "npm:^10.1.3"
     jsdom: "npm:^26.1.0"
     lucide-react: "npm:^0.542.0"
     msw: "npm:^2.7.4"
     postcss: "npm:^8.5.6"
+    prettier: "npm:^3.6.2"
     react: "npm:^19.1.1"
     react-dom: "npm:^19.1.1"
     react-hook-form: "npm:^7.62.0"
@@ -1204,6 +1221,7 @@ __metadata:
     tw-animate-css: "npm:^1.3.7"
     typescript: "npm:^5.9.2"
     ulid: "npm:^3.0.1"
+    use-immer: "npm:^0.11.0"
     vite: "npm:^7.1.5"
     vitest: "npm:^3.2.4"
     zod: "npm:^4.1.5"
@@ -2930,12 +2948,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:*":
+  version: 24.5.1
+  resolution: "@types/node@npm:24.5.1"
+  dependencies:
+    undici-types: "npm:~7.12.0"
+  checksum: 10c0/5f0cb038be789b58170e616452ba1f8ebb85bf2fbce58a7e32b1eb08391f64f5e31a9cdbccefbfcd9e6d73b66b564b5e037a1d678ab20213559a32e1d7b6ce17
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:^22.14.1":
   version: 22.14.1
   resolution: "@types/node@npm:22.14.1"
   dependencies:
     undici-types: "npm:~6.21.0"
   checksum: 10c0/d49c4d00403b1c2348cf0701b505fd636d80aabe18102105998dc62fdd36dcaf911e73c7a868c48c21c1022b825c67b475b65b1222d84b704d8244d152bb7f86
+  languageName: node
+  linkType: hard
+
+"@types/papaparse@npm:^5.3.16":
+  version: 5.3.16
+  resolution: "@types/papaparse@npm:5.3.16"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/0009d3dcdc20cd37f171db77307844a575b89435a3398d1437173a1e5feb13a88e61fed7756f264555743a9510693ae1c9e20c4558c066085fd0bd881abf5497
   languageName: node
   linkType: hard
 
@@ -4659,6 +4695,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"immer@npm:^10.1.3":
+  version: 10.1.3
+  resolution: "immer@npm:10.1.3"
+  checksum: 10c0/b3929022c1999935c9c5e9491fce20d883c15a04072628056f3b8c51a63ac0876d1c1f25cec146e325c30c906bc7f15a636c29ed53156f0a3049150f152df4c8
+  languageName: node
+  linkType: hard
+
 "import-fresh@npm:^3.2.1":
   version: 3.3.1
   resolution: "import-fresh@npm:3.3.1"
@@ -5523,6 +5566,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"papaparse@npm:^5.5.3":
+  version: 5.5.3
+  resolution: "papaparse@npm:5.5.3"
+  checksum: 10c0/623aae6a35703308fd5a39d616fb3837231ebc70697346355ea508154d3f24df75b6554b736afc1924192205518a5db14e75f5e1cf35d154326050a37cdd9447
+  languageName: node
+  linkType: hard
+
 "parent-module@npm:^1.0.0":
   version: 1.0.1
   resolution: "parent-module@npm:1.0.1"
@@ -5649,6 +5699,15 @@ __metadata:
   bin:
     prettier: bin/prettier.cjs
   checksum: 10c0/3880cb90b9dc0635819ab52ff571518c35bd7f15a6e80a2054c05dbc8a3aa6e74f135519e91197de63705bcb38388ded7e7230e2178432a1468005406238b877
+  languageName: node
+  linkType: hard
+
+"prettier@npm:^3.6.2":
+  version: 3.6.2
+  resolution: "prettier@npm:3.6.2"
+  bin:
+    prettier: bin/prettier.cjs
+  checksum: 10c0/488cb2f2b99ec13da1e50074912870217c11edaddedeadc649b1244c749d15ba94e846423d062e2c4c9ae683e2d65f754de28889ba06e697ac4f988d44f45812
   languageName: node
   linkType: hard
 
@@ -6609,6 +6668,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"undici-types@npm:~7.12.0":
+  version: 7.12.0
+  resolution: "undici-types@npm:7.12.0"
+  checksum: 10c0/326e455bbc0026db1d6b81c76a1cf10c63f7e2f9821db2e24fdc258f482814e5bfa8481f8910d07c68e305937c5c049610fdc441c5e8b7bb0daca7154fb8a306
+  languageName: node
+  linkType: hard
+
 "unique-filename@npm:^4.0.0":
   version: 4.0.0
   resolution: "unique-filename@npm:4.0.0"
@@ -6690,6 +6756,16 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 10c0/f887488c6e6075cdad4962979da1714b217bcb1ee009a9e57ce9a844bcfc4c3a99e93983dfc2e5af9e0913824d24e730090ff255e902c516dcb58d2d3837e01c
+  languageName: node
+  linkType: hard
+
+"use-immer@npm:^0.11.0":
+  version: 0.11.0
+  resolution: "use-immer@npm:0.11.0"
+  peerDependencies:
+    immer: ">=8.0.0"
+    react: ^16.8.0 || ^17.0.1 || ^18.0.0 || ^19.0.0
+  checksum: 10c0/fc4391c8aab0868194241d16f2826efb3563b69de37e9cfd325044f3115fa155b6b76c4a8731f274bd4ea31a0fe709bf2b6cfc1d8aa12a00f672ed0dccd3a4fa
   languageName: node
   linkType: hard
 
@@ -6926,7 +7002,6 @@ __metadata:
   resolution: "vitexpress@workspace:."
   dependencies:
     "@vitest/coverage-v8": "npm:^3.2.4"
-    date-fns: "npm:^4.1.0"
     typescript: "npm:^5.9.2"
     vitest: "npm:^3.2.4"
   languageName: unknown

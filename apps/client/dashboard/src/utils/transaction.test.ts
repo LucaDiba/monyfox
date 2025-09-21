@@ -1,33 +1,24 @@
-import { describe, expect, test } from "vitest";
+import {describe, expect, test} from "vitest";
 import {
   getIncomeExpenseByMonthData,
   getTransactionType,
   getBalancesByMonth,
   getStartAndEndDate,
 } from "./transaction";
-import { LocalDate } from "@js-joda/core";
-import { type Transaction } from "@monyfox/common-data";
+import {LocalDate} from "@js-joda/core";
+import {type Transaction} from "@monyfox/common-data";
 
 describe("getTransactionType", () => {
   test("income", () => {
     expect(
       getTransactionType(
         {
-          id: "1",
-          description: "test",
-          accountingDate: "2025-01-01",
-          transactionDate: "2025-01-01",
-          transactionCategoryId: null,
           from: {
-            amount: 100,
-            symbolId: "EUR",
             account: {
               id: "1",
             },
           },
           to: {
-            amount: 100,
-            symbolId: "EUR",
             account: {
               id: "2",
             },
@@ -46,21 +37,12 @@ describe("getTransactionType", () => {
     expect(
       getTransactionType(
         {
-          id: "1",
-          description: "test",
-          accountingDate: "2025-01-01",
-          transactionDate: "2025-01-01",
-          transactionCategoryId: null,
           from: {
-            amount: 100,
-            symbolId: "EUR",
             account: {
               id: "2",
             },
           },
           to: {
-            amount: 100,
-            symbolId: "EUR",
             account: {
               id: "1",
             },
@@ -79,21 +61,12 @@ describe("getTransactionType", () => {
     expect(
       getTransactionType(
         {
-          id: "1",
-          description: "test",
-          accountingDate: "2025-01-01",
-          transactionDate: "2025-01-01",
-          transactionCategoryId: null,
           from: {
-            amount: 100,
-            symbolId: "EUR",
             account: {
               id: "1",
             },
           },
           to: {
-            amount: 100,
-            symbolId: "EUR",
             account: {
               id: "2",
             },
@@ -112,21 +85,12 @@ describe("getTransactionType", () => {
     expect(
       getTransactionType(
         {
-          id: "1",
-          description: "test",
-          accountingDate: "2025-01-01",
-          transactionDate: "2025-01-01",
-          transactionCategoryId: null,
           from: {
-            amount: 100,
-            symbolId: "EUR",
             account: {
               name: "test 1",
             },
           },
           to: {
-            amount: 100,
-            symbolId: "EUR",
             account: {
               name: "test 2",
             },
@@ -216,7 +180,7 @@ describe("getIncomeExpenseByMonthData", () => {
       isPersonalAsset: true,
     });
 
-    const convertAmount = ({ amount }: { amount: number }) => amount;
+    const convertAmount = ({amount}: { amount: number }) => amount;
 
     const defaultSymbolId = "EUR";
     const startDate = LocalDate.parse("2025-01-01");
@@ -232,10 +196,10 @@ describe("getIncomeExpenseByMonthData", () => {
     });
 
     expect(result).toEqual([
-      { date: "2025-01", income: 100, expense: 0 },
-      { date: "2025-02", income: 0, expense: 0 },
-      { date: "2025-03", income: 0, expense: 0 },
-      { date: "2025-04", income: 0, expense: 300 },
+      {date: "2025-01", income: 100, expense: 0},
+      {date: "2025-02", income: 0, expense: 0},
+      {date: "2025-03", income: 0, expense: 0},
+      {date: "2025-04", income: 0, expense: 300},
       // TODO: Fix this test
       // { date: "2025-03", income: 0, expense: 0 },
     ]);
@@ -336,7 +300,7 @@ describe("getBalancesByMonth", () => {
       name: "test",
       isPersonalAsset: true,
     });
-    const convertAmount = ({ amount }: { amount: number }) => amount;
+    const convertAmount = ({amount}: { amount: number }) => amount;
 
     const startDate = LocalDate.parse("2025-01-01");
     const endDate = LocalDate.parse("2025-04-30");
@@ -351,10 +315,10 @@ describe("getBalancesByMonth", () => {
     });
 
     expect(result).toEqual([
-      { date: "2025-01", balance: 100 },
-      { date: "2025-02", balance: 100 },
-      { date: "2025-03", balance: 100 },
-      { date: "2025-04", balance: -200 },
+      {date: "2025-01", balance: 100},
+      {date: "2025-02", balance: 100},
+      {date: "2025-03", balance: 100},
+      {date: "2025-04", balance: -200},
     ]);
   });
 
@@ -366,7 +330,7 @@ describe("getBalancesByMonth", () => {
       name: "test",
       isPersonalAsset: true,
     });
-    const convertAmount = ({ amount }: { amount: number }) => amount;
+    const convertAmount = ({amount}: { amount: number }) => amount;
 
     const startDate = LocalDate.parse("2025-01-01");
     const endDate = LocalDate.parse("2025-03-01");
@@ -381,8 +345,8 @@ describe("getBalancesByMonth", () => {
     });
 
     expect(result).toEqual([
-      { date: "2025-01", balance: 0 },
-      { date: "2025-02", balance: 0 },
+      {date: "2025-01", balance: 0},
+      {date: "2025-02", balance: 0},
       // TODO: Fix this test
       // { date: "2025-03", balance: 0 },
     ]);

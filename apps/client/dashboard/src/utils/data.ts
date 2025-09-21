@@ -345,6 +345,8 @@ export function generateTestProfile(): Profile {
         ],
         transactions,
         transactionCategories,
+        transactionsImporters: [],
+        importedTransactions: [],
         assetSymbols: [assetEur, assetUsd, assetIbm],
         assetSymbolExchanges: [exchangeEurUsd, exchangeEurIbm],
         assetSymbolExchangersMetadata: { alphavantage: { apiKey: "demo" } },

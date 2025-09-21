@@ -156,6 +156,8 @@ function CreateProfileModal({
                       assetSymbolExchangersMetadata: { alphavantage: null },
                       transactions: [],
                       transactionCategories: [],
+                      transactionsImporters: [],
+                      importedTransactions: [],
                       lastUpdated: new Date().toISOString(),
                     },
                   },

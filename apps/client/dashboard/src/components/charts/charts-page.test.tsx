@@ -1,10 +1,7 @@
 import { TestContextProvider } from "@/utils/tests/contexts";
 import { afterEach, beforeEach, describe, expect, test } from "vitest";
 import { ChartsPage } from "./charts-page";
-import {
-  fireEvent,
-  render,
-} from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 
 const originalLanguageDescriptor = Object.getOwnPropertyDescriptor(
   navigator,
@@ -49,10 +46,9 @@ describe("ChartsPage", () => {
     expect(r.getByTestId("flow-chart")).toBeInTheDocument();
     expect(r.queryByTestId("net-worth-chart")).not.toBeInTheDocument();
 
-    fireEvent.click(r.getByText("Net worth"));
+    fireEvent.mouseDown(r.getByText("Net worth"));
 
-    // TODO: fix this test
-    // expect(r.queryByTestId("flow-chart")).not.toBeInTheDocument();
-    // expect(r.getByTestId("net-worth-chart")).toBeInTheDocument();
+    expect(r.queryByTestId("flow-chart")).not.toBeInTheDocument();
+    expect(r.getByTestId("net-worth-chart")).toBeInTheDocument();
   });
 });
