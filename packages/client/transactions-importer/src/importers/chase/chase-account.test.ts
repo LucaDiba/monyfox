@@ -11,10 +11,10 @@ describe("ChaseAccountTransactionsImporter", () => {
       const file = new File(
         [
           `Details,Posting Date,Description,Amount,Type,Balance,Check or Slip #\n` +
-          `CREDIT,09/15/2025,Employer Payroll,1000.00,ACH_CREDIT,1500.00,\n` +
-          `DEBIT,09/14/2025,GROCERY STORE,-45.67,ACH_DEBIT,1454.33,\n` +
-          `DEBIT,09/10/2025,Loan Payment,200.00,LOAN_PMT,1200.00,\n` +
-          `DEBIT,09/09/2025,ATM Withdrawal,100.00,ATM,1100.00,\n`,
+          `CREDIT,09/15/2025,Employer Payroll,1000.00,ACH_CREDIT,1500.00,,\n` +
+          `DEBIT,09/14/2025,"CHASE CREDIT CRD AUTOPAY                    PPD ID: 123456789",-45.67,ACH_DEBIT,1454.33,,\n` +
+          `DEBIT,09/10/2025,Loan Payment,200.00,LOAN_PMT,1200.00,,\n` +
+          `DEBIT,09/09/2025,ATM Withdrawal,100.00,ATM,1100.00,,\n`,
         ],
         "chase_account.csv",
         { type: "text/csv" },
@@ -46,9 +46,9 @@ describe("ChaseAccountTransactionsImporter", () => {
 
       // ACH_DEBIT -> expense, from this account -> to unknown (amount is absolute)
       expect(transactions[1]).toEqual({
-        providerTransactionId: "chase-account-09/14/2025--45.67-GROCERY STORE",
+        providerTransactionId: "chase-account-09/14/2025--45.67-CHASE CREDIT CRD AUTOPAY                    PPD ID: 123456789",
         transactionType: "expense",
-        description: "GROCERY STORE",
+        description: "CHASE CREDIT CRD AUTOPAY                    PPD ID: 123456789",
         date: "2025-09-14",
         transactionCategoryId: null,
         from: {

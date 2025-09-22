@@ -1,7 +1,10 @@
 import Papa, { type ParseLocalConfig } from "papaparse";
 import z from "zod";
 
-type AcceptedParseLocalConfig = { header: ParseLocalConfig["header"] };
+type AcceptedParseLocalConfig = {
+  header?: ParseLocalConfig["header"],
+  beforeFirstChunk?: ParseLocalConfig["beforeFirstChunk"]
+};
 
 export class CsvParser<Row> {
   private rowSchema: z.ZodType<Row>;
@@ -17,6 +20,7 @@ export class CsvParser<Row> {
       try {
         Papa.parse(file, {
           header: this.config?.header,
+          beforeFirstChunk: this.config?.beforeFirstChunk,
           skipEmptyLines: true,
           complete: (result) => {
             if (result.errors.length > 0) {

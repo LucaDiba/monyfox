@@ -5,6 +5,7 @@ import z from "zod";
 
 const RowSchema = z.object({
   Details: z.union([
+    z.literal("DSLIP"),
     z.literal("CREDIT"),
     z.literal("DEBIT"),
   ]),
@@ -27,6 +28,7 @@ const RowSchema = z.object({
   ]),
   Balance: z.string(),
   "Check or Slip #": z.string(),
+  "__ignore__": z.string(),
 });
 type Row = z.infer<typeof RowSchema>;
 
@@ -49,7 +51,13 @@ export class ChaseAccountTransactionsImporter
   }
 
   async getTransactions(file: File): Promise<ParsedTransaction[]> {
-    const csvParser = new CsvParser(RowSchema, { header: true });
+    function beforeFirstChunk(chunk: string) {
+      // The header has 7 columns, but the other rows have 8 columns ¯\_(ツ)_/¯.
+      // So let's just replace the header with a new one that has 8 columns.
+      return chunk.replace("Details,Posting Date,Description,Amount,Type,Balance,Check or Slip #", "Details,Posting Date,Description,Amount,Type,Balance,Check or Slip #,__ignore__");
+    }
+
+    const csvParser = new CsvParser(RowSchema, { header: true, beforeFirstChunk });
     const rows = await csvParser.fromFile(file);
     return rows.map(this.toImportedTransaction, this);
   }
@@ -69,6 +77,7 @@ export class ChaseAccountTransactionsImporter
     switch (row["Type"]) {
       case "ACH_CREDIT":
       case "MISC_CREDIT":
+      case "CHECK_DEPOSIT":
         transactionType = "income";
         fromAccount = unknownAccount;
         toAccount = { id: this.accountId };
