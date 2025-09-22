@@ -1,5 +1,11 @@
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { TransactionType } from "@/utils/transaction";
 import { useProfile } from "@/hooks/use-profile";
 import { ArrowRightIcon, CheckIcon, CircleOffIcon } from "lucide-react";
@@ -8,14 +14,16 @@ import { ColumnDef } from "@tanstack/react-table";
 import { createContext, useContext } from "react";
 import { Updater } from "use-immer";
 import { WritableDraft } from "immer";
-import {
-  SelectItemTransactionCategoryWithChildren,
-} from "@/components/settings/transaction-categories/category-select-item";
+import { SelectItemTransactionCategoryWithChildren } from "@/components/settings/transaction-categories/category-select-item";
 import { getTransactionCategoriesWithChildren } from "@/utils/transaction-category";
 import { DraftTransaction, DraftTransactionStatus } from "./utils";
 import { Button } from "@/components/ui/button";
 import { needsReview } from "@/utils/imported-transaction";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { toast } from "sonner";
 
 export function ImportedTransactionsTable({
@@ -81,7 +89,7 @@ function DateCell({ transaction }: { transaction: DraftTransaction }) {
   }
 
   return (
-    <Input type="date" value={transaction.date ?? ""} onChange={onChangeDate}/>
+    <Input type="date" value={transaction.date ?? ""} onChange={onChangeDate} />
   );
 }
 
@@ -109,8 +117,14 @@ function DescriptionCell({ transaction }: { transaction: DraftTransaction }) {
     });
   }
 
-  const fromAccountId = transaction.from.account !== undefined && "id" in transaction.from.account ? transaction.from.account.id : "-";
-  const toAccountId = transaction.to.account !== undefined && "id" in transaction.to.account ? transaction.to.account.id : "-";
+  const fromAccountId =
+    transaction.from.account !== undefined && "id" in transaction.from.account
+      ? transaction.from.account.id
+      : "-";
+  const toAccountId =
+    transaction.to.account !== undefined && "id" in transaction.to.account
+      ? transaction.to.account.id
+      : "-";
 
   return (
     <>
@@ -119,19 +133,17 @@ function DescriptionCell({ transaction }: { transaction: DraftTransaction }) {
         value={transaction.description ?? ""}
         onChange={onChangeDescription}
       />
-      {transaction.status === "needs-review" && (
+      {transaction.transactionType === "transfer" && (
         <>
-          <br/>
+          <br />
           <div className="flex gap-2">
             <div data-slot="form-item" className={"grid gap-2"}>
               <Select value={fromAccountId} onValueChange={onChangeFromAccount}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select an account"/>
+                  <SelectValue placeholder="Select an account" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="-">
-                    N/A
-                  </SelectItem>
+                  <SelectItem value="-">N/A</SelectItem>
                   {accounts.map((account) => (
                     <SelectItem key={account.id} value={account.id}>
                       {account.name}
@@ -140,16 +152,14 @@ function DescriptionCell({ transaction }: { transaction: DraftTransaction }) {
                 </SelectContent>
               </Select>
             </div>
-            <ArrowRightIcon className="self-center"/>
+            <ArrowRightIcon className="self-center" />
             <div data-slot="form-item" className={"grid gap-2"}>
               <Select value={toAccountId} onValueChange={onChangeToAccount}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select an account"/>
+                  <SelectValue placeholder="Select an account" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="-">
-                    N/A
-                  </SelectItem>
+                  <SelectItem value="-">N/A</SelectItem>
                   {accounts.map((account) => (
                     <SelectItem key={account.id} value={account.id}>
                       {account.name}
@@ -213,7 +223,7 @@ function CategoryCell({ transaction }: { transaction: DraftTransaction }) {
       onValueChange={onChangeCategory}
     >
       <SelectTrigger>
-        <SelectValue/>
+        <SelectValue />
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="-">(None)</SelectItem>
@@ -234,7 +244,10 @@ function TypeCell({ transaction }: { transaction: DraftTransaction }) {
 
   function onChangeType(value: TransactionType) {
     updateTransaction(transaction.providerTransactionId, (draft) => {
-      if ((draft.transactionType === "expense" && value === "income") || (draft.transactionType === "income" && value === "expense")) {
+      if (
+        (draft.transactionType === "expense" && value === "income") ||
+        (draft.transactionType === "income" && value === "expense")
+      ) {
         const previousFrom = draft.from;
         draft.from = draft.to;
         draft.to = previousFrom;
@@ -263,7 +276,7 @@ function TypeCell({ transaction }: { transaction: DraftTransaction }) {
   return (
     <Select value={transaction.transactionType} onValueChange={onChangeType}>
       <SelectTrigger className={typeBgColor}>
-        <SelectValue/>
+        <SelectValue />
       </SelectTrigger>
       <SelectContent>
         <SelectItem value={TransactionType.Expense}>Expense</SelectItem>
@@ -316,8 +329,13 @@ function ActionsCell({ transaction }: { transaction: DraftTransaction }) {
     return (
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="secondary" size="icon" onClick={onDoNotSkip}>
-            <CircleOffIcon/>
+          <Button
+            variant="secondary"
+            size="icon"
+            onClick={onDoNotSkip}
+            data-testid={"do-not-skip-button"}
+          >
+            <CircleOffIcon />
           </Button>
         </TooltipTrigger>
         <TooltipContent>Do not skip</TooltipContent>
@@ -330,16 +348,25 @@ function ActionsCell({ transaction }: { transaction: DraftTransaction }) {
       <div className="flex gap-2">
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button size="icon" onClick={onReviewed}>
-              <CheckIcon/>
+            <Button
+              size="icon"
+              onClick={onReviewed}
+              data-testid={"mark-reviewed-button"}
+            >
+              <CheckIcon />
             </Button>
           </TooltipTrigger>
           <TooltipContent>Mark as reviewed</TooltipContent>
         </Tooltip>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="secondary" size="icon" onClick={onSkip}>
-              <CircleOffIcon/>
+            <Button
+              variant="secondary"
+              size="icon"
+              onClick={onSkip}
+              data-testid={"skip-button"}
+            >
+              <CircleOffIcon />
             </Button>
           </TooltipTrigger>
           <TooltipContent>Skip</TooltipContent>
@@ -351,8 +378,13 @@ function ActionsCell({ transaction }: { transaction: DraftTransaction }) {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Button variant="secondary" size="icon" onClick={onSkip}>
-          <CircleOffIcon/>
+        <Button
+          variant="secondary"
+          size="icon"
+          onClick={onSkip}
+          data-testid={"skip-button"}
+        >
+          <CircleOffIcon />
         </Button>
       </TooltipTrigger>
       <TooltipContent>Skip</TooltipContent>
@@ -364,31 +396,31 @@ const columns: ColumnDef<DraftTransaction>[] = [
   {
     accessorKey: "date",
     header: "Date",
-    cell: ({ row }) => <DateCell transaction={row.original}/>,
+    cell: ({ row }) => <DateCell transaction={row.original} />,
   },
   {
     accessorKey: "description",
     header: "Description",
-    cell: ({ row }) => <DescriptionCell transaction={row.original}/>,
+    cell: ({ row }) => <DescriptionCell transaction={row.original} />,
   },
   {
     accessorKey: "amount",
     header: "Amount",
-    cell: ({ row }) => <AmountCell transaction={row.original}/>,
+    cell: ({ row }) => <AmountCell transaction={row.original} />,
   },
   {
     accessorKey: "transactionCategoryId",
     header: "Category",
-    cell: ({ row }) => <CategoryCell transaction={row.original}/>,
+    cell: ({ row }) => <CategoryCell transaction={row.original} />,
   },
   {
     accessorKey: "type",
     header: "Type",
-    cell: ({ row }) => <TypeCell transaction={row.original}/>,
+    cell: ({ row }) => <TypeCell transaction={row.original} />,
   },
   {
     accessorKey: "actions",
     header: "",
-    cell: ({ row }) => <ActionsCell transaction={row.original}/>,
+    cell: ({ row }) => <ActionsCell transaction={row.original} />,
   },
 ];
