@@ -22,7 +22,14 @@ export function CreateImporterCard() {
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <CreateImporterLink name="Chase" importerType="chase-card"/>
+          <CreateImporterLink
+            name="Chase (account)"
+            importerType="chase-account"
+          />
+          <CreateImporterLink
+            name="Chase (credit card)"
+            importerType="chase-card"
+          />
         </div>
       </CardContent>
     </Card>
@@ -49,8 +56,12 @@ function CreateImporterLink({
             to={"/p/$profileId/transactions/import/importers/new/$importerType"}
             params={{ profileId, importerType }}
           >
-            <Button variant="secondary" size="icon" title={`Create ${name} importer`}>
-              <PlusIcon/>
+            <Button
+              variant="secondary"
+              size="icon"
+              title={`Create ${name} importer`}
+            >
+              <PlusIcon />
             </Button>
           </Link>
         </CardTitle>

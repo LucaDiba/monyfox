@@ -6,7 +6,7 @@ import { TransactionsImporter } from "@monyfox/common-data";
 import { Link } from "@tanstack/react-router";
 import { ArrowRightIcon, PencilIcon } from "lucide-react";
 import { toast } from "sonner";
-import { ChaseCardImporter } from "./providers/chase";
+import { ChaseCardImporter, ChaseAccountImporter } from "./providers/chase";
 
 export function Importer({ importer }: { importer: TransactionsImporter }) {
   const {
@@ -51,13 +51,19 @@ export function Importer({ importer }: { importer: TransactionsImporter }) {
         onClose={closeModal}
         description={"Edit the configuration of the importer."}
       >
-        {importer.data.provider === "chase-card" && (
+        {importer.data.provider === "chase-card" ? (
           <ChaseCardImporter.EditForm
             importer={importer}
             onSuccess={onSuccess}
             onError={onError}
           />
-        )}
+        ) : importer.data.provider === "chase-account" ? (
+          <ChaseAccountImporter.EditForm
+            importer={importer}
+            onSuccess={onSuccess}
+            onError={onError}
+          />
+        ) : null}
       </Modal>
     </>
   );

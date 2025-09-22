@@ -1,12 +1,15 @@
-import { ReactNode } from 'react';
-import { useImmer } from 'use-immer';
-import { ImportedTransactionsCard } from './imported-transactions-card';
-import { useProfile } from '@/hooks/use-profile';
-import { ChaseCardImporter } from '../importers/providers/chase';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { DraftTransaction, DraftTransactionStatus } from './utils';
-import { ParsedTransaction } from '@monyfox/client-transactions-importer';
-import { needsReview } from '@/utils/imported-transaction';
+import { ReactNode } from "react";
+import { useImmer } from "use-immer";
+import { ImportedTransactionsCard } from "./imported-transactions-card";
+import { useProfile } from "@/hooks/use-profile";
+import {
+  ChaseCardImporter,
+  ChaseAccountImporter,
+} from "../importers/providers/chase";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { DraftTransaction, DraftTransactionStatus } from "./utils";
+import { ParsedTransaction } from "@monyfox/client-transactions-importer";
+import { needsReview } from "@/utils/imported-transaction";
 
 export function ImportTransactionsPage({ importerId }: { importerId: string }) {
   const {
@@ -51,9 +54,18 @@ export function ImportTransactionsPage({ importerId }: { importerId: string }) {
 
   let Form: ReactNode;
   switch (transactionsImporter.data.provider) {
-    case 'chase-card': {
+    case "chase-card": {
       Form = (
         <ChaseCardImporter.ImportForm
+          transactionsImporter={transactionsImporter}
+          onSuccess={onImport}
+        />
+      );
+      break;
+    }
+    case "chase-account": {
+      Form = (
+        <ChaseAccountImporter.ImportForm
           transactionsImporter={transactionsImporter}
           onSuccess={onImport}
         />

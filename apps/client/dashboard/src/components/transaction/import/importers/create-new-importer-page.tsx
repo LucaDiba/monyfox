@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import { ChaseCardImporter } from "./providers/chase";
+import { ChaseCardImporter, ChaseAccountImporter } from "./providers/chase";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export function CreateNewImporterPage({
@@ -17,6 +17,13 @@ export function CreateNewImporterPage({
   if (importerType === "chase-card") {
     return (
       <ChaseCardImporter.CreateForm onSuccess={onSuccess} onError={onError} />
+    );
+  } else if (importerType === "chase-account") {
+    return (
+      <ChaseAccountImporter.CreateForm
+        onSuccess={onSuccess}
+        onError={onError}
+      />
     );
   }
 
