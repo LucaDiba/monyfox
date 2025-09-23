@@ -53,6 +53,8 @@ export function ImportedTransactionsTable({
         data={transactions}
         columns={columns}
         getRowId={(r) => r.providerTransactionId}
+        // Prevent the table from resetting the page index when the data changes on input updates.
+        options={{ autoResetPageIndex: false }}
       />
     </ImportedTransactionsContext.Provider>
   );

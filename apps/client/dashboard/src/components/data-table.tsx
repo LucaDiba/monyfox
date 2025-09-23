@@ -37,15 +37,18 @@ import {
 } from "lucide-react";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
+import { TableOptions } from "@tanstack/table-core";
 
 export function DataTable<DataT>({
   data,
   columns,
   getRowId,
+  options = {},
 }: {
   data: Array<DataT>;
   columns: ColumnDef<DataT>[];
   getRowId: (row: DataT) => string;
+  options?: Omit<TableOptions<DataT>, "data" | "columns" | "getCoreRowModel">;
 }) {
   const [rowSelection, setRowSelection] = useState({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -79,6 +82,7 @@ export function DataTable<DataT>({
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
+    ...options,
   });
 
   return (
