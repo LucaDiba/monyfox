@@ -25,8 +25,5 @@
   "engines": {
     "node": ">=22.14.0"
   },
-  "packageManager": "yarn@4.9.1",
-  "dependencies": {
-    "date-fns": "^4.1.0"
-  }
+  "packageManager": "yarn@4.9.1"
 }

@@ -33,16 +33,27 @@ import { getTransactionType, TransactionType } from "@/utils/transaction";
 import { getTransactionCategoriesWithChildren } from "@/utils/transaction-category";
 import { SelectItemTransactionCategoryWithChildren } from "../settings/transaction-categories/category-select-item";
 
-export function AddTransactionFloatingButton() {
+export function AddTransactionButton({
+  isFloating = false,
+  type,
+}: {
+  isFloating?: boolean;
+  type: "text" | "icon";
+}) {
   const { isOpen, openModal, closeModal } = useModal();
+
+  const buttonClassName = isFloating
+    ? "fixed bottom-4 right-4 z-10"
+    : undefined;
+
+  const buttonSize = isFloating ? "lg" : type === "icon" ? "icon" : "default";
+  const iconClassName = isFloating ? "size-7" : undefined;
+
   return (
     <>
-      <Button
-        className="fixed bottom-4 right-4 z-10"
-        size="lg"
-        onClick={openModal}
-      >
-        <PlusIcon className="size-7" />
+      <Button onClick={openModal} className={buttonClassName} size={buttonSize}>
+        {type === "text" && "New transaction"}
+        {type === "icon" && <PlusIcon className={iconClassName} />}
       </Button>
       <TransactionFormModal
         isOpen={isOpen}

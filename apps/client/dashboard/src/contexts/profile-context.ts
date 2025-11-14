@@ -8,6 +8,8 @@ import type {
   AssetSymbol,
   AssetSymbolExchange,
   Profile,
+  ImportedTransaction,
+  TransactionsImporter,
 } from "@monyfox/common-data";
 import { MutationResult } from "./profile-provider";
 
@@ -27,7 +29,9 @@ interface ProfileContextProps {
   ) => Array<{ symbolId: string; balance: number }>;
 
   // Transactions
+  getTransaction: (id: string) => Transaction | null;
   createTransaction: MutationResult<Transaction>;
+  createTransactions: MutationResult<Transaction[]>;
   updateTransaction: MutationResult<Transaction>;
   deleteTransaction: MutationResult<string>;
   getTransactionsBetweenDates: (
@@ -41,6 +45,20 @@ interface ProfileContextProps {
   updateTransactionCategory: MutationResult<TransactionCategory>;
   deleteTransactionCategory: MutationResult<string>;
   getTransactionCountByCategory: (categoryId: string) => number;
+
+  // Transaction importers
+  createTransactionsImporters: MutationResult<TransactionsImporter[]>;
+  updateTransactionsImporter: MutationResult<TransactionsImporter>;
+  deleteTransactionsImporter: MutationResult<string>;
+
+  // Imported transactions
+  importTransactions: MutationResult<{
+    transactions: Transaction[];
+    importedTransactions: ImportedTransaction[];
+  }>;
+  getImportedTransaction: (
+    providerTransactionId: string,
+  ) => ImportedTransaction | null;
 
   // Symbols
   getAssetSymbol: (assetSymbolId: string) => AssetSymbol;

@@ -1,5 +1,5 @@
-import { LocalDate, YearMonth } from "@js-joda/core";
-import { type Account, type Transaction } from "@monyfox/common-data";
+import {LocalDate, YearMonth} from "@js-joda/core";
+import {type Account, type Transaction} from "@monyfox/common-data";
 
 export enum TransactionType {
   Unknown = "unknown",
@@ -9,7 +9,7 @@ export enum TransactionType {
 }
 
 export function getTransactionType(
-  transaction: Transaction,
+  transaction: { from: { account: Transaction['from']['account'] }, to: { account: Transaction['to']['account'] } },
   getAccount: (accountId: string) => Account,
 ) {
   const isFromPersonalAsset =
@@ -73,7 +73,7 @@ export function getIncomeExpenseByMonthData({
     ).toString();
 
     if (!stateByDate.has(transactionDate)) {
-      stateByDate.set(transactionDate, { income: 0, expense: 0 });
+      stateByDate.set(transactionDate, {income: 0, expense: 0});
     }
 
     const state = stateByDate.get(transactionDate)!;
@@ -155,7 +155,7 @@ export function getIncomeExpenseByCategoryData({
     const transactionCategoryId = transaction.transactionCategoryId;
 
     if (!stateByCategoryId.has(transactionCategoryId)) {
-      stateByCategoryId.set(transactionCategoryId, { income: 0, expense: 0 });
+      stateByCategoryId.set(transactionCategoryId, {income: 0, expense: 0});
     }
 
     const state = stateByCategoryId.get(transactionCategoryId)!;

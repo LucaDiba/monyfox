@@ -23,6 +23,9 @@ import { Route as PProfileIdProfileAccountsIndexImport } from './routes/p/$profi
 import { Route as PProfileIdProfileSettingsTransactionCategoriesImport } from './routes/p/$profileId/_profile/settings/transaction-categories'
 import { Route as PProfileIdProfileSettingsSymbolsImport } from './routes/p/$profileId/_profile/settings/symbols'
 import { Route as PProfileIdProfileSettingsBackupImport } from './routes/p/$profileId/_profile/settings/backup'
+import { Route as PProfileIdProfileTransactionsImportIndexImport } from './routes/p/$profileId/_profile/transactions/import/index'
+import { Route as PProfileIdProfileTransactionsImportImportersImporterIdImport } from './routes/p/$profileId/_profile/transactions/import/importers/$importerId'
+import { Route as PProfileIdProfileTransactionsImportImportersNewImporterTypeImport } from './routes/p/$profileId/_profile/transactions/import/importers/new/$importerType'
 
 // Create Virtual Routes
 
@@ -99,6 +102,27 @@ const PProfileIdProfileSettingsBackupRoute =
   PProfileIdProfileSettingsBackupImport.update({
     id: '/settings/backup',
     path: '/settings/backup',
+    getParentRoute: () => PProfileIdProfileRoute,
+  } as any)
+
+const PProfileIdProfileTransactionsImportIndexRoute =
+  PProfileIdProfileTransactionsImportIndexImport.update({
+    id: '/transactions/import/',
+    path: '/transactions/import/',
+    getParentRoute: () => PProfileIdProfileRoute,
+  } as any)
+
+const PProfileIdProfileTransactionsImportImportersImporterIdRoute =
+  PProfileIdProfileTransactionsImportImportersImporterIdImport.update({
+    id: '/transactions/import/importers/$importerId',
+    path: '/transactions/import/importers/$importerId',
+    getParentRoute: () => PProfileIdProfileRoute,
+  } as any)
+
+const PProfileIdProfileTransactionsImportImportersNewImporterTypeRoute =
+  PProfileIdProfileTransactionsImportImportersNewImporterTypeImport.update({
+    id: '/transactions/import/importers/new/$importerType',
+    path: '/transactions/import/importers/new/$importerType',
     getParentRoute: () => PProfileIdProfileRoute,
   } as any)
 
@@ -183,6 +207,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PProfileIdProfileTransactionsIndexImport
       parentRoute: typeof PProfileIdProfileImport
     }
+    '/p/$profileId/_profile/transactions/import/': {
+      id: '/p/$profileId/_profile/transactions/import/'
+      path: '/transactions/import'
+      fullPath: '/p/$profileId/transactions/import'
+      preLoaderRoute: typeof PProfileIdProfileTransactionsImportIndexImport
+      parentRoute: typeof PProfileIdProfileImport
+    }
+    '/p/$profileId/_profile/transactions/import/importers/$importerId': {
+      id: '/p/$profileId/_profile/transactions/import/importers/$importerId'
+      path: '/transactions/import/importers/$importerId'
+      fullPath: '/p/$profileId/transactions/import/importers/$importerId'
+      preLoaderRoute: typeof PProfileIdProfileTransactionsImportImportersImporterIdImport
+      parentRoute: typeof PProfileIdProfileImport
+    }
+    '/p/$profileId/_profile/transactions/import/importers/new/$importerType': {
+      id: '/p/$profileId/_profile/transactions/import/importers/new/$importerType'
+      path: '/transactions/import/importers/new/$importerType'
+      fullPath: '/p/$profileId/transactions/import/importers/new/$importerType'
+      preLoaderRoute: typeof PProfileIdProfileTransactionsImportImportersNewImporterTypeImport
+      parentRoute: typeof PProfileIdProfileImport
+    }
   }
 }
 
@@ -197,6 +242,9 @@ interface PProfileIdProfileRouteChildren {
   PProfileIdProfileChartsIndexRoute: typeof PProfileIdProfileChartsIndexRoute
   PProfileIdProfileSettingsIndexRoute: typeof PProfileIdProfileSettingsIndexRoute
   PProfileIdProfileTransactionsIndexRoute: typeof PProfileIdProfileTransactionsIndexRoute
+  PProfileIdProfileTransactionsImportIndexRoute: typeof PProfileIdProfileTransactionsImportIndexRoute
+  PProfileIdProfileTransactionsImportImportersImporterIdRoute: typeof PProfileIdProfileTransactionsImportImportersImporterIdRoute
+  PProfileIdProfileTransactionsImportImportersNewImporterTypeRoute: typeof PProfileIdProfileTransactionsImportImportersNewImporterTypeRoute
 }
 
 const PProfileIdProfileRouteChildren: PProfileIdProfileRouteChildren = {
@@ -210,6 +258,12 @@ const PProfileIdProfileRouteChildren: PProfileIdProfileRouteChildren = {
   PProfileIdProfileSettingsIndexRoute: PProfileIdProfileSettingsIndexRoute,
   PProfileIdProfileTransactionsIndexRoute:
     PProfileIdProfileTransactionsIndexRoute,
+  PProfileIdProfileTransactionsImportIndexRoute:
+    PProfileIdProfileTransactionsImportIndexRoute,
+  PProfileIdProfileTransactionsImportImportersImporterIdRoute:
+    PProfileIdProfileTransactionsImportImportersImporterIdRoute,
+  PProfileIdProfileTransactionsImportImportersNewImporterTypeRoute:
+    PProfileIdProfileTransactionsImportImportersNewImporterTypeRoute,
 }
 
 const PProfileIdProfileRouteWithChildren =
@@ -238,6 +292,9 @@ export interface FileRoutesByFullPath {
   '/p/$profileId/charts': typeof PProfileIdProfileChartsIndexRoute
   '/p/$profileId/settings': typeof PProfileIdProfileSettingsIndexRoute
   '/p/$profileId/transactions': typeof PProfileIdProfileTransactionsIndexRoute
+  '/p/$profileId/transactions/import': typeof PProfileIdProfileTransactionsImportIndexRoute
+  '/p/$profileId/transactions/import/importers/$importerId': typeof PProfileIdProfileTransactionsImportImportersImporterIdRoute
+  '/p/$profileId/transactions/import/importers/new/$importerType': typeof PProfileIdProfileTransactionsImportImportersNewImporterTypeRoute
 }
 
 export interface FileRoutesByTo {
@@ -250,6 +307,9 @@ export interface FileRoutesByTo {
   '/p/$profileId/charts': typeof PProfileIdProfileChartsIndexRoute
   '/p/$profileId/settings': typeof PProfileIdProfileSettingsIndexRoute
   '/p/$profileId/transactions': typeof PProfileIdProfileTransactionsIndexRoute
+  '/p/$profileId/transactions/import': typeof PProfileIdProfileTransactionsImportIndexRoute
+  '/p/$profileId/transactions/import/importers/$importerId': typeof PProfileIdProfileTransactionsImportImportersImporterIdRoute
+  '/p/$profileId/transactions/import/importers/new/$importerType': typeof PProfileIdProfileTransactionsImportImportersNewImporterTypeRoute
 }
 
 export interface FileRoutesById {
@@ -265,6 +325,9 @@ export interface FileRoutesById {
   '/p/$profileId/_profile/charts/': typeof PProfileIdProfileChartsIndexRoute
   '/p/$profileId/_profile/settings/': typeof PProfileIdProfileSettingsIndexRoute
   '/p/$profileId/_profile/transactions/': typeof PProfileIdProfileTransactionsIndexRoute
+  '/p/$profileId/_profile/transactions/import/': typeof PProfileIdProfileTransactionsImportIndexRoute
+  '/p/$profileId/_profile/transactions/import/importers/$importerId': typeof PProfileIdProfileTransactionsImportImportersImporterIdRoute
+  '/p/$profileId/_profile/transactions/import/importers/new/$importerType': typeof PProfileIdProfileTransactionsImportImportersNewImporterTypeRoute
 }
 
 export interface FileRouteTypes {
@@ -280,6 +343,9 @@ export interface FileRouteTypes {
     | '/p/$profileId/charts'
     | '/p/$profileId/settings'
     | '/p/$profileId/transactions'
+    | '/p/$profileId/transactions/import'
+    | '/p/$profileId/transactions/import/importers/$importerId'
+    | '/p/$profileId/transactions/import/importers/new/$importerType'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -291,6 +357,9 @@ export interface FileRouteTypes {
     | '/p/$profileId/charts'
     | '/p/$profileId/settings'
     | '/p/$profileId/transactions'
+    | '/p/$profileId/transactions/import'
+    | '/p/$profileId/transactions/import/importers/$importerId'
+    | '/p/$profileId/transactions/import/importers/new/$importerType'
   id:
     | '__root__'
     | '/'
@@ -304,6 +373,9 @@ export interface FileRouteTypes {
     | '/p/$profileId/_profile/charts/'
     | '/p/$profileId/_profile/settings/'
     | '/p/$profileId/_profile/transactions/'
+    | '/p/$profileId/_profile/transactions/import/'
+    | '/p/$profileId/_profile/transactions/import/importers/$importerId'
+    | '/p/$profileId/_profile/transactions/import/importers/new/$importerType'
   fileRoutesById: FileRoutesById
 }
 
@@ -351,7 +423,10 @@ export const routeTree = rootRoute
         "/p/$profileId/_profile/accounts/",
         "/p/$profileId/_profile/charts/",
         "/p/$profileId/_profile/settings/",
-        "/p/$profileId/_profile/transactions/"
+        "/p/$profileId/_profile/transactions/",
+        "/p/$profileId/_profile/transactions/import/",
+        "/p/$profileId/_profile/transactions/import/importers/$importerId",
+        "/p/$profileId/_profile/transactions/import/importers/new/$importerType"
       ]
     },
     "/p/$profileId/_profile/": {
@@ -384,6 +459,18 @@ export const routeTree = rootRoute
     },
     "/p/$profileId/_profile/transactions/": {
       "filePath": "p/$profileId/_profile/transactions/index.tsx",
+      "parent": "/p/$profileId/_profile"
+    },
+    "/p/$profileId/_profile/transactions/import/": {
+      "filePath": "p/$profileId/_profile/transactions/import/index.tsx",
+      "parent": "/p/$profileId/_profile"
+    },
+    "/p/$profileId/_profile/transactions/import/importers/$importerId": {
+      "filePath": "p/$profileId/_profile/transactions/import/importers/$importerId.tsx",
+      "parent": "/p/$profileId/_profile"
+    },
+    "/p/$profileId/_profile/transactions/import/importers/new/$importerType": {
+      "filePath": "p/$profileId/_profile/transactions/import/importers/new/$importerType.tsx",
       "parent": "/p/$profileId/_profile"
     }
   }

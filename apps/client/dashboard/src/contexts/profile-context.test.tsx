@@ -18,6 +18,17 @@ describe("ProfileProvider", () => {
     ).toBeDefined();
   });
 
+  test("optioanl field has default data", async () => {
+    const result = render(
+      <TestContextProvider withOptionalField={true}>
+        <ProfileDataForTest />
+      </TestContextProvider>,
+    );
+
+    expect(result.getByText("Accounts:Account 1,Account 2.")).toBeDefined();
+    expect(result.getByText("Transactions importers:.")).toBeDefined();
+  });
+
   test("undefined profile", async () => {
     const result = render(
       <TestContextProvider profileId="NON_EXISTING_PROFILE_ID">
@@ -75,13 +86,17 @@ describe("ProfileProvider", () => {
 
 function ProfileDataForTest() {
   const {
-    data: { accounts, transactions },
+    data: { accounts, transactions, transactionsImporters },
     createAccount,
   } = useProfile();
   return (
     <div>
       <p>Accounts:{accounts.map((a) => a.name).join(",")}.</p>
       <p>Transactions:{transactions.map((t) => t.description).join(",")}.</p>
+      <p>
+        Transactions importers:
+        {transactionsImporters.map((t) => t.id).join(",")}.
+      </p>
       <button
         onClick={() =>
           createAccount.mutateAsync({

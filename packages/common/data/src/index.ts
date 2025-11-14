@@ -8,6 +8,10 @@ import { DataSchema, RawDataSchema } from "./schemas/data";
 import { ProfileSchema } from "./schemas/profile";
 import { TransactionSchema } from "./schemas/transaction";
 import { TransactionCategorySchema } from "./schemas/transaction-category";
+import {
+  ImportedTransactionSchema,
+  TransactionsImporterSchema,
+} from "./schemas/transactions-importer";
 
 export { AccountSchema } from "./schemas/account";
 export type Account = z.infer<typeof AccountSchema>;
@@ -32,3 +36,6 @@ export { TransactionSchema } from "./schemas/transaction";
 
 export type TransactionCategory = z.infer<typeof TransactionCategorySchema>;
 export { TransactionCategorySchema } from "./schemas/transaction-category";
+
+export type TransactionsImporter = z.infer<typeof TransactionsImporterSchema>;
+export type ImportedTransaction = z.infer<typeof ImportedTransactionSchema>;

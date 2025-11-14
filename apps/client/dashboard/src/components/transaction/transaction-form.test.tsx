@@ -1,17 +1,14 @@
 import { TestContextProvider } from "@/utils/tests/contexts";
 import { describe, expect, test } from "vitest";
 import { fireEvent, render, waitFor } from "@testing-library/react";
-import {
-  AddTransactionFloatingButton,
-  TransactionFormModal,
-} from "./transaction-form";
+import { AddTransactionButton, TransactionFormModal } from "./transaction-form";
 import { Transaction } from "@monyfox/common-data";
 import { TransactionsTable } from "./transactions-table";
 
-test("AddTransactionFloatingButton", async () => {
+test("AddTransactionButton", async () => {
   const { getByRole } = render(
     <TestContextProvider>
-      <AddTransactionFloatingButton />
+      <AddTransactionButton isFloating type="icon" />
     </TestContextProvider>,
   );
 
