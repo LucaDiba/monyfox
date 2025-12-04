@@ -15,12 +15,13 @@
     "build": "yarn workspaces foreach -At run build",
     "lint": "yarn workspaces foreach -A run lint",
     "test": "yarn workspaces foreach -A run test",
-    "coverage": "npx vitest run --coverage"
+    "coverage": "npx vitest run --coverage",
+    "ncu": "npx npm-check-updates -u && yarn workspaces foreach -A run ncu"
   },
   "devDependencies": {
-    "@vitest/coverage-v8": "^3.2.4",
-    "typescript": "^5.9.2",
-    "vitest": "^3.2.4"
+    "@vitest/coverage-v8": "^4.0.15",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.15"
   },
   "engines": {
     "node": ">=22.14.0"

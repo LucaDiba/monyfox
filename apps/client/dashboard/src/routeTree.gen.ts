@@ -10,99 +10,162 @@
 
 import { createFileRoute } from '@tanstack/react-router'
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as PProfileIdProfileRouteImport } from './routes/p/$profileId/_profile'
+import { Route as PProfileIdProfileIndexRouteImport } from './routes/p/$profileId/_profile/index'
+import { Route as PProfileIdProfileTransactionsIndexRouteImport } from './routes/p/$profileId/_profile/transactions/index'
+import { Route as PProfileIdProfileSettingsIndexRouteImport } from './routes/p/$profileId/_profile/settings/index'
+import { Route as PProfileIdProfileChartsIndexRouteImport } from './routes/p/$profileId/_profile/charts/index'
+import { Route as PProfileIdProfileAccountsIndexRouteImport } from './routes/p/$profileId/_profile/accounts/index'
+import { Route as PProfileIdProfileSettingsTransactionCategoriesRouteImport } from './routes/p/$profileId/_profile/settings/transaction-categories'
+import { Route as PProfileIdProfileSettingsSymbolsRouteImport } from './routes/p/$profileId/_profile/settings/symbols'
+import { Route as PProfileIdProfileSettingsBackupRouteImport } from './routes/p/$profileId/_profile/settings/backup'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as IndexImport } from './routes/index'
-import { Route as PProfileIdProfileImport } from './routes/p/$profileId/_profile'
-import { Route as PProfileIdProfileIndexImport } from './routes/p/$profileId/_profile/index'
-import { Route as PProfileIdProfileTransactionsIndexImport } from './routes/p/$profileId/_profile/transactions/index'
-import { Route as PProfileIdProfileSettingsIndexImport } from './routes/p/$profileId/_profile/settings/index'
-import { Route as PProfileIdProfileChartsIndexImport } from './routes/p/$profileId/_profile/charts/index'
-import { Route as PProfileIdProfileAccountsIndexImport } from './routes/p/$profileId/_profile/accounts/index'
-import { Route as PProfileIdProfileSettingsTransactionCategoriesImport } from './routes/p/$profileId/_profile/settings/transaction-categories'
-import { Route as PProfileIdProfileSettingsSymbolsImport } from './routes/p/$profileId/_profile/settings/symbols'
-import { Route as PProfileIdProfileSettingsBackupImport } from './routes/p/$profileId/_profile/settings/backup'
+const PProfileIdRouteImport = createFileRoute('/p/$profileId')()
 
-// Create Virtual Routes
-
-const PProfileIdImport = createFileRoute('/p/$profileId')()
-
-// Create/Update Routes
-
-const IndexRoute = IndexImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const PProfileIdRoute = PProfileIdImport.update({
+const PProfileIdRoute = PProfileIdRouteImport.update({
   id: '/p/$profileId',
   path: '/p/$profileId',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const PProfileIdProfileRoute = PProfileIdProfileImport.update({
+const PProfileIdProfileRoute = PProfileIdProfileRouteImport.update({
   id: '/_profile',
   getParentRoute: () => PProfileIdRoute,
 } as any)
-
-const PProfileIdProfileIndexRoute = PProfileIdProfileIndexImport.update({
+const PProfileIdProfileIndexRoute = PProfileIdProfileIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => PProfileIdProfileRoute,
 } as any)
-
 const PProfileIdProfileTransactionsIndexRoute =
-  PProfileIdProfileTransactionsIndexImport.update({
+  PProfileIdProfileTransactionsIndexRouteImport.update({
     id: '/transactions/',
     path: '/transactions/',
     getParentRoute: () => PProfileIdProfileRoute,
   } as any)
-
 const PProfileIdProfileSettingsIndexRoute =
-  PProfileIdProfileSettingsIndexImport.update({
+  PProfileIdProfileSettingsIndexRouteImport.update({
     id: '/settings/',
     path: '/settings/',
     getParentRoute: () => PProfileIdProfileRoute,
   } as any)
-
 const PProfileIdProfileChartsIndexRoute =
-  PProfileIdProfileChartsIndexImport.update({
+  PProfileIdProfileChartsIndexRouteImport.update({
     id: '/charts/',
     path: '/charts/',
     getParentRoute: () => PProfileIdProfileRoute,
   } as any)
-
 const PProfileIdProfileAccountsIndexRoute =
-  PProfileIdProfileAccountsIndexImport.update({
+  PProfileIdProfileAccountsIndexRouteImport.update({
     id: '/accounts/',
     path: '/accounts/',
     getParentRoute: () => PProfileIdProfileRoute,
   } as any)
-
 const PProfileIdProfileSettingsTransactionCategoriesRoute =
-  PProfileIdProfileSettingsTransactionCategoriesImport.update({
+  PProfileIdProfileSettingsTransactionCategoriesRouteImport.update({
     id: '/settings/transaction-categories',
     path: '/settings/transaction-categories',
     getParentRoute: () => PProfileIdProfileRoute,
   } as any)
-
 const PProfileIdProfileSettingsSymbolsRoute =
-  PProfileIdProfileSettingsSymbolsImport.update({
+  PProfileIdProfileSettingsSymbolsRouteImport.update({
     id: '/settings/symbols',
     path: '/settings/symbols',
     getParentRoute: () => PProfileIdProfileRoute,
   } as any)
-
 const PProfileIdProfileSettingsBackupRoute =
-  PProfileIdProfileSettingsBackupImport.update({
+  PProfileIdProfileSettingsBackupRouteImport.update({
     id: '/settings/backup',
     path: '/settings/backup',
     getParentRoute: () => PProfileIdProfileRoute,
   } as any)
 
-// Populate the FileRoutesByPath interface
+export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
+  '/p/$profileId': typeof PProfileIdProfileRouteWithChildren
+  '/p/$profileId/': typeof PProfileIdProfileIndexRoute
+  '/p/$profileId/settings/backup': typeof PProfileIdProfileSettingsBackupRoute
+  '/p/$profileId/settings/symbols': typeof PProfileIdProfileSettingsSymbolsRoute
+  '/p/$profileId/settings/transaction-categories': typeof PProfileIdProfileSettingsTransactionCategoriesRoute
+  '/p/$profileId/accounts': typeof PProfileIdProfileAccountsIndexRoute
+  '/p/$profileId/charts': typeof PProfileIdProfileChartsIndexRoute
+  '/p/$profileId/settings': typeof PProfileIdProfileSettingsIndexRoute
+  '/p/$profileId/transactions': typeof PProfileIdProfileTransactionsIndexRoute
+}
+export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/p/$profileId': typeof PProfileIdProfileIndexRoute
+  '/p/$profileId/settings/backup': typeof PProfileIdProfileSettingsBackupRoute
+  '/p/$profileId/settings/symbols': typeof PProfileIdProfileSettingsSymbolsRoute
+  '/p/$profileId/settings/transaction-categories': typeof PProfileIdProfileSettingsTransactionCategoriesRoute
+  '/p/$profileId/accounts': typeof PProfileIdProfileAccountsIndexRoute
+  '/p/$profileId/charts': typeof PProfileIdProfileChartsIndexRoute
+  '/p/$profileId/settings': typeof PProfileIdProfileSettingsIndexRoute
+  '/p/$profileId/transactions': typeof PProfileIdProfileTransactionsIndexRoute
+}
+export interface FileRoutesById {
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/p/$profileId': typeof PProfileIdRouteWithChildren
+  '/p/$profileId/_profile': typeof PProfileIdProfileRouteWithChildren
+  '/p/$profileId/_profile/': typeof PProfileIdProfileIndexRoute
+  '/p/$profileId/_profile/settings/backup': typeof PProfileIdProfileSettingsBackupRoute
+  '/p/$profileId/_profile/settings/symbols': typeof PProfileIdProfileSettingsSymbolsRoute
+  '/p/$profileId/_profile/settings/transaction-categories': typeof PProfileIdProfileSettingsTransactionCategoriesRoute
+  '/p/$profileId/_profile/accounts/': typeof PProfileIdProfileAccountsIndexRoute
+  '/p/$profileId/_profile/charts/': typeof PProfileIdProfileChartsIndexRoute
+  '/p/$profileId/_profile/settings/': typeof PProfileIdProfileSettingsIndexRoute
+  '/p/$profileId/_profile/transactions/': typeof PProfileIdProfileTransactionsIndexRoute
+}
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | '/p/$profileId'
+    | '/p/$profileId/'
+    | '/p/$profileId/settings/backup'
+    | '/p/$profileId/settings/symbols'
+    | '/p/$profileId/settings/transaction-categories'
+    | '/p/$profileId/accounts'
+    | '/p/$profileId/charts'
+    | '/p/$profileId/settings'
+    | '/p/$profileId/transactions'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/p/$profileId'
+    | '/p/$profileId/settings/backup'
+    | '/p/$profileId/settings/symbols'
+    | '/p/$profileId/settings/transaction-categories'
+    | '/p/$profileId/accounts'
+    | '/p/$profileId/charts'
+    | '/p/$profileId/settings'
+    | '/p/$profileId/transactions'
+  id:
+    | '__root__'
+    | '/'
+    | '/p/$profileId'
+    | '/p/$profileId/_profile'
+    | '/p/$profileId/_profile/'
+    | '/p/$profileId/_profile/settings/backup'
+    | '/p/$profileId/_profile/settings/symbols'
+    | '/p/$profileId/_profile/settings/transaction-categories'
+    | '/p/$profileId/_profile/accounts/'
+    | '/p/$profileId/_profile/charts/'
+    | '/p/$profileId/_profile/settings/'
+    | '/p/$profileId/_profile/transactions/'
+  fileRoutesById: FileRoutesById
+}
+export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  PProfileIdRoute: typeof PProfileIdRouteWithChildren
+}
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
@@ -110,83 +173,81 @@ declare module '@tanstack/react-router' {
       id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/p/$profileId': {
       id: '/p/$profileId'
       path: '/p/$profileId'
       fullPath: '/p/$profileId'
-      preLoaderRoute: typeof PProfileIdImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof PProfileIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/p/$profileId/_profile': {
       id: '/p/$profileId/_profile'
       path: '/p/$profileId'
       fullPath: '/p/$profileId'
-      preLoaderRoute: typeof PProfileIdProfileImport
+      preLoaderRoute: typeof PProfileIdProfileRouteImport
       parentRoute: typeof PProfileIdRoute
     }
     '/p/$profileId/_profile/': {
       id: '/p/$profileId/_profile/'
       path: '/'
       fullPath: '/p/$profileId/'
-      preLoaderRoute: typeof PProfileIdProfileIndexImport
-      parentRoute: typeof PProfileIdProfileImport
-    }
-    '/p/$profileId/_profile/settings/backup': {
-      id: '/p/$profileId/_profile/settings/backup'
-      path: '/settings/backup'
-      fullPath: '/p/$profileId/settings/backup'
-      preLoaderRoute: typeof PProfileIdProfileSettingsBackupImport
-      parentRoute: typeof PProfileIdProfileImport
-    }
-    '/p/$profileId/_profile/settings/symbols': {
-      id: '/p/$profileId/_profile/settings/symbols'
-      path: '/settings/symbols'
-      fullPath: '/p/$profileId/settings/symbols'
-      preLoaderRoute: typeof PProfileIdProfileSettingsSymbolsImport
-      parentRoute: typeof PProfileIdProfileImport
-    }
-    '/p/$profileId/_profile/settings/transaction-categories': {
-      id: '/p/$profileId/_profile/settings/transaction-categories'
-      path: '/settings/transaction-categories'
-      fullPath: '/p/$profileId/settings/transaction-categories'
-      preLoaderRoute: typeof PProfileIdProfileSettingsTransactionCategoriesImport
-      parentRoute: typeof PProfileIdProfileImport
-    }
-    '/p/$profileId/_profile/accounts/': {
-      id: '/p/$profileId/_profile/accounts/'
-      path: '/accounts'
-      fullPath: '/p/$profileId/accounts'
-      preLoaderRoute: typeof PProfileIdProfileAccountsIndexImport
-      parentRoute: typeof PProfileIdProfileImport
-    }
-    '/p/$profileId/_profile/charts/': {
-      id: '/p/$profileId/_profile/charts/'
-      path: '/charts'
-      fullPath: '/p/$profileId/charts'
-      preLoaderRoute: typeof PProfileIdProfileChartsIndexImport
-      parentRoute: typeof PProfileIdProfileImport
-    }
-    '/p/$profileId/_profile/settings/': {
-      id: '/p/$profileId/_profile/settings/'
-      path: '/settings'
-      fullPath: '/p/$profileId/settings'
-      preLoaderRoute: typeof PProfileIdProfileSettingsIndexImport
-      parentRoute: typeof PProfileIdProfileImport
+      preLoaderRoute: typeof PProfileIdProfileIndexRouteImport
+      parentRoute: typeof PProfileIdProfileRoute
     }
     '/p/$profileId/_profile/transactions/': {
       id: '/p/$profileId/_profile/transactions/'
       path: '/transactions'
       fullPath: '/p/$profileId/transactions'
-      preLoaderRoute: typeof PProfileIdProfileTransactionsIndexImport
-      parentRoute: typeof PProfileIdProfileImport
+      preLoaderRoute: typeof PProfileIdProfileTransactionsIndexRouteImport
+      parentRoute: typeof PProfileIdProfileRoute
+    }
+    '/p/$profileId/_profile/settings/': {
+      id: '/p/$profileId/_profile/settings/'
+      path: '/settings'
+      fullPath: '/p/$profileId/settings'
+      preLoaderRoute: typeof PProfileIdProfileSettingsIndexRouteImport
+      parentRoute: typeof PProfileIdProfileRoute
+    }
+    '/p/$profileId/_profile/charts/': {
+      id: '/p/$profileId/_profile/charts/'
+      path: '/charts'
+      fullPath: '/p/$profileId/charts'
+      preLoaderRoute: typeof PProfileIdProfileChartsIndexRouteImport
+      parentRoute: typeof PProfileIdProfileRoute
+    }
+    '/p/$profileId/_profile/accounts/': {
+      id: '/p/$profileId/_profile/accounts/'
+      path: '/accounts'
+      fullPath: '/p/$profileId/accounts'
+      preLoaderRoute: typeof PProfileIdProfileAccountsIndexRouteImport
+      parentRoute: typeof PProfileIdProfileRoute
+    }
+    '/p/$profileId/_profile/settings/transaction-categories': {
+      id: '/p/$profileId/_profile/settings/transaction-categories'
+      path: '/settings/transaction-categories'
+      fullPath: '/p/$profileId/settings/transaction-categories'
+      preLoaderRoute: typeof PProfileIdProfileSettingsTransactionCategoriesRouteImport
+      parentRoute: typeof PProfileIdProfileRoute
+    }
+    '/p/$profileId/_profile/settings/symbols': {
+      id: '/p/$profileId/_profile/settings/symbols'
+      path: '/settings/symbols'
+      fullPath: '/p/$profileId/settings/symbols'
+      preLoaderRoute: typeof PProfileIdProfileSettingsSymbolsRouteImport
+      parentRoute: typeof PProfileIdProfileRoute
+    }
+    '/p/$profileId/_profile/settings/backup': {
+      id: '/p/$profileId/_profile/settings/backup'
+      path: '/settings/backup'
+      fullPath: '/p/$profileId/settings/backup'
+      preLoaderRoute: typeof PProfileIdProfileSettingsBackupRouteImport
+      parentRoute: typeof PProfileIdProfileRoute
     }
   }
 }
-
-// Create and export the route tree
 
 interface PProfileIdProfileRouteChildren {
   PProfileIdProfileIndexRoute: typeof PProfileIdProfileIndexRoute
@@ -227,165 +288,10 @@ const PProfileIdRouteWithChildren = PProfileIdRoute._addFileChildren(
   PProfileIdRouteChildren,
 )
 
-export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/p/$profileId': typeof PProfileIdProfileRouteWithChildren
-  '/p/$profileId/': typeof PProfileIdProfileIndexRoute
-  '/p/$profileId/settings/backup': typeof PProfileIdProfileSettingsBackupRoute
-  '/p/$profileId/settings/symbols': typeof PProfileIdProfileSettingsSymbolsRoute
-  '/p/$profileId/settings/transaction-categories': typeof PProfileIdProfileSettingsTransactionCategoriesRoute
-  '/p/$profileId/accounts': typeof PProfileIdProfileAccountsIndexRoute
-  '/p/$profileId/charts': typeof PProfileIdProfileChartsIndexRoute
-  '/p/$profileId/settings': typeof PProfileIdProfileSettingsIndexRoute
-  '/p/$profileId/transactions': typeof PProfileIdProfileTransactionsIndexRoute
-}
-
-export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/p/$profileId': typeof PProfileIdProfileIndexRoute
-  '/p/$profileId/settings/backup': typeof PProfileIdProfileSettingsBackupRoute
-  '/p/$profileId/settings/symbols': typeof PProfileIdProfileSettingsSymbolsRoute
-  '/p/$profileId/settings/transaction-categories': typeof PProfileIdProfileSettingsTransactionCategoriesRoute
-  '/p/$profileId/accounts': typeof PProfileIdProfileAccountsIndexRoute
-  '/p/$profileId/charts': typeof PProfileIdProfileChartsIndexRoute
-  '/p/$profileId/settings': typeof PProfileIdProfileSettingsIndexRoute
-  '/p/$profileId/transactions': typeof PProfileIdProfileTransactionsIndexRoute
-}
-
-export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/p/$profileId': typeof PProfileIdRouteWithChildren
-  '/p/$profileId/_profile': typeof PProfileIdProfileRouteWithChildren
-  '/p/$profileId/_profile/': typeof PProfileIdProfileIndexRoute
-  '/p/$profileId/_profile/settings/backup': typeof PProfileIdProfileSettingsBackupRoute
-  '/p/$profileId/_profile/settings/symbols': typeof PProfileIdProfileSettingsSymbolsRoute
-  '/p/$profileId/_profile/settings/transaction-categories': typeof PProfileIdProfileSettingsTransactionCategoriesRoute
-  '/p/$profileId/_profile/accounts/': typeof PProfileIdProfileAccountsIndexRoute
-  '/p/$profileId/_profile/charts/': typeof PProfileIdProfileChartsIndexRoute
-  '/p/$profileId/_profile/settings/': typeof PProfileIdProfileSettingsIndexRoute
-  '/p/$profileId/_profile/transactions/': typeof PProfileIdProfileTransactionsIndexRoute
-}
-
-export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/p/$profileId'
-    | '/p/$profileId/'
-    | '/p/$profileId/settings/backup'
-    | '/p/$profileId/settings/symbols'
-    | '/p/$profileId/settings/transaction-categories'
-    | '/p/$profileId/accounts'
-    | '/p/$profileId/charts'
-    | '/p/$profileId/settings'
-    | '/p/$profileId/transactions'
-  fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/p/$profileId'
-    | '/p/$profileId/settings/backup'
-    | '/p/$profileId/settings/symbols'
-    | '/p/$profileId/settings/transaction-categories'
-    | '/p/$profileId/accounts'
-    | '/p/$profileId/charts'
-    | '/p/$profileId/settings'
-    | '/p/$profileId/transactions'
-  id:
-    | '__root__'
-    | '/'
-    | '/p/$profileId'
-    | '/p/$profileId/_profile'
-    | '/p/$profileId/_profile/'
-    | '/p/$profileId/_profile/settings/backup'
-    | '/p/$profileId/_profile/settings/symbols'
-    | '/p/$profileId/_profile/settings/transaction-categories'
-    | '/p/$profileId/_profile/accounts/'
-    | '/p/$profileId/_profile/charts/'
-    | '/p/$profileId/_profile/settings/'
-    | '/p/$profileId/_profile/transactions/'
-  fileRoutesById: FileRoutesById
-}
-
-export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  PProfileIdRoute: typeof PProfileIdRouteWithChildren
-}
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PProfileIdRoute: PProfileIdRouteWithChildren,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/p/$profileId"
-      ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/p/$profileId": {
-      "filePath": "p/$profileId",
-      "children": [
-        "/p/$profileId/_profile"
-      ]
-    },
-    "/p/$profileId/_profile": {
-      "filePath": "p/$profileId/_profile.tsx",
-      "parent": "/p/$profileId",
-      "children": [
-        "/p/$profileId/_profile/",
-        "/p/$profileId/_profile/settings/backup",
-        "/p/$profileId/_profile/settings/symbols",
-        "/p/$profileId/_profile/settings/transaction-categories",
-        "/p/$profileId/_profile/accounts/",
-        "/p/$profileId/_profile/charts/",
-        "/p/$profileId/_profile/settings/",
-        "/p/$profileId/_profile/transactions/"
-      ]
-    },
-    "/p/$profileId/_profile/": {
-      "filePath": "p/$profileId/_profile/index.tsx",
-      "parent": "/p/$profileId/_profile"
-    },
-    "/p/$profileId/_profile/settings/backup": {
-      "filePath": "p/$profileId/_profile/settings/backup.tsx",
-      "parent": "/p/$profileId/_profile"
-    },
-    "/p/$profileId/_profile/settings/symbols": {
-      "filePath": "p/$profileId/_profile/settings/symbols.tsx",
-      "parent": "/p/$profileId/_profile"
-    },
-    "/p/$profileId/_profile/settings/transaction-categories": {
-      "filePath": "p/$profileId/_profile/settings/transaction-categories.tsx",
-      "parent": "/p/$profileId/_profile"
-    },
-    "/p/$profileId/_profile/accounts/": {
-      "filePath": "p/$profileId/_profile/accounts/index.tsx",
-      "parent": "/p/$profileId/_profile"
-    },
-    "/p/$profileId/_profile/charts/": {
-      "filePath": "p/$profileId/_profile/charts/index.tsx",
-      "parent": "/p/$profileId/_profile"
-    },
-    "/p/$profileId/_profile/settings/": {
-      "filePath": "p/$profileId/_profile/settings/index.tsx",
-      "parent": "/p/$profileId/_profile"
-    },
-    "/p/$profileId/_profile/transactions/": {
-      "filePath": "p/$profileId/_profile/transactions/index.tsx",
-      "parent": "/p/$profileId/_profile"
-    }
-  }
-}
-ROUTE_MANIFEST_END */

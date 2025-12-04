@@ -5,8 +5,9 @@ import {
   TestDatabaseProvider,
   TestQueryClientProvider,
 } from "@/utils/tests/contexts";
-import { ReactNode, RouterProvider } from "@tanstack/react-router";
+import { RouterProvider } from "@tanstack/react-router";
 import { getTestRouter } from "@/utils/tests/router";
+import type { ReactNode } from "react";
 
 export function ProfileSelectionTestContextProvider({
   children,
